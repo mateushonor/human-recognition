@@ -9,9 +9,9 @@ model = YOLO("yolo-Weights/yolov8n.pt")
 # object classes
 classNames = ["person"]  # Supondo que 'person' é índice 0
 
-USERNAME = 'Honor'
-PASSWORD = 'Mateus2449'
-IP = '192.168.100.158'
+USERNAME = 'udne'
+PASSWORD = 'en4t75'
+IP = '192.168.100.216'
 PORT = '554'
 
 os.environ["OPENCV_FFMPEG_CAPTURE_OPTION"] = "rtsp_transport;udp"
@@ -22,7 +22,6 @@ cap = cv2.VideoCapture(URL, cv2.CAP_FFMPEG)
 
 while True:
     ret, frame = cap.read()
-   
     
     results = model(frame, stream=True)
 
