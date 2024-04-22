@@ -1,10 +1,10 @@
-import twilio.rest
+from twilio.rest import Client
 import SMS_Keys as keys
 
 
 def messageSender():
 
-    client = twilio.rest.Client(keys.account,keys.auth_token)
+    client = Client(keys.account,keys.auth_token)
 
     message = client.messages.create(
         body="TEST MESSAGE",
@@ -13,3 +13,5 @@ def messageSender():
     )
 
     return message
+
+print(messageSender().body)
