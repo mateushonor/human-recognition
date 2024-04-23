@@ -8,8 +8,8 @@ model = YOLO("yolo-Weights/yolov8n.pt")
 
 # Definições das câmeras
 cameras = {
-    "Camera1": "rtsp://Honor:Mateus2449@192.168.100.158:554/onvif1?overrun_nonfatal=1&fifo_size=50000000",
-    "Camera2": "rtsp://udne:en4t75@192.168.100.216:554/onvif2?overrun_nonfatal=1&fifo_size=50000000"
+    "Camera1": "rtsp://kafn:fa6nca@192.168.218.181:554/onvif1?overrun_nonfatal=1&fifo_size=50000000",
+    "Camera2": "rtsp://udne:aa4tru@192.168.218.252:554/onvif2?overrun_nonfatal=1&fifo_size=50000000"
 }
 
 # Dicionário para contar detecções de humanos por câmera

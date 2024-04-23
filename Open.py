@@ -22,16 +22,18 @@ model = YOLO("yolo-Weights/yolov8n.pt")
 
 # Definições das câmeras
 cameras = {
-    "Camera1": "rtsp://Honor:Mateus2449@192.168.100.158:554/onvif1?overrun_nonfatal=1&fifo_size=50000000",
-    "Camera2": "rtsp://udne:en4t75@192.168.100.216:554/onvif2?overrun_nonfatal=1&fifo_size=50000000"
+    "Camera1": "rtsp://kafn:fa6nca@192.168.218.181:554/onvif1?overrun_nonfatal=1&fifo_size=50000000",
+    "Camera2": "rtsp://udne:aa4tru@192.168.218.252:554/onvif2?overrun_nonfatal=1&fifo_size=50000000"
 }
 
 stop_event = threading.Event()
 # Dicionário para contar detecções de humanos por câmera
 human_detections = {camera: 0 for camera in cameras}
+permissiontosend = {camera: 0 for camera in cameras}
 
 # Função para processar cada câmera
 def process_camera(url, camera_name):
+    
     cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
     if not cap.isOpened():
         print(f"Erro ao abrir a câmera {camera_name}")
@@ -39,6 +41,7 @@ def process_camera(url, camera_name):
 
     try:
         while True:
+            print(camera_name)
             start_time = time.time()
             ret, frame = cap.read()
             if not ret:
@@ -60,16 +63,21 @@ def process_camera(url, camera_name):
                 human_detections[camera_name] += 1
             else:
                 human_detections[camera_name] = 0
+                permissiontosend[camera_name] = 1
 
+            print(human_detections[camera_name])
+            print(permissiontosend[camera_name])
             cv2.imshow(f'VIDEO {camera_name}', frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
-            if human_detections[camera_name] >= 2:
+            if (human_detections[camera_name] >= 2) and (permissiontosend[camera_name] == 1):
+                permissiontosend[camera_name] = 0
                 
                 print(f"Duas detecções consecutivas de humanos em {camera_name}. Enviando mensagem.")
+
                 fetch_and_send_messages(camera_name)
-                login_screen()  
+                #login_screen()  
                 continue
 
             frame_time = time.time() - start_time
@@ -97,7 +105,7 @@ def login_screen():
     root.mainloop()
 
 def check_login(username, password, root):
-    cursor.execute("SELECT * FROM users WHERE username=%s AND password=%s", (username, password))
+    cursor.execute("SELECT * FROM usuarios WHERE nome_usuario=%s AND senha_hash=%s", (username, password))
     if cursor.fetchone():
         print("Login successful. Continuing processing.")
         root.destroy()

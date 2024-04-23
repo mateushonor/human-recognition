@@ -1,6 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
 import psycopg2
+import datetime
+import subprocess
+import sys
+
 
 # Função para conectar ao banco de dados
 def connect_db():
@@ -44,6 +48,12 @@ def list_phones():
     cur.close()
     conn.close()
 
+# def run_open():
+#     result = subprocess.call("py Open.py", shell=True)
+#     print(result)
+#     # z = subprocess.Popen("py Open.py", stdin=subprocess.PIPE, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
+#     # print(z)
+
 # Interface gráfica
 root = tk.Tk()
 root.title("Cadastro de Telefones")
@@ -53,6 +63,9 @@ phone_entry = tk.Entry(root)
 phone_entry.pack(pady=5)
 
 tk.Button(root, text="Inserir", command=insert_phone).pack(pady=(5, 10))
+
+
+#tk.Button(root, text="Rodar", command=run_open).pack(pady=(5, 10))
 
 tk.Label(root, text="Números cadastrados:").pack(pady=(10, 0))
 listbox = tk.Listbox(root, height=10, width=50)

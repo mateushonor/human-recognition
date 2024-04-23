@@ -1,0 +1,10 @@
+-- Cria o banco de dados
+CREATE DATABASE mydatabase;
+
+
+
+-- Cria uma tabela
+CREATE TABLE telefones (
+    id SERIAL PRIMARY KEY,
+    telefone VARCHAR(255) NOT NULL
+);
