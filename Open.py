@@ -4,7 +4,7 @@ import threading
 import time
 from tkinter import Tk, Label, Entry, Button
 from ultralytics import YOLO  # A biblioteca fictícia do YOLO
-from sms import fetch_and_send_messages  # Função fictícia para enviar mensagens
+from Sms import fetch_and_send_messages  # Função fictícia para enviar mensagens
 
 # Conexão com o banco de dados PostgreSQL
 conn = psycopg2.connect(
@@ -22,8 +22,8 @@ model = YOLO("yolo-Weights/yolov8n.pt")
 
 # Definições das câmeras
 cameras = {
-    "Camera1": "rtsp://kafn:fa6nca@192.168.218.181:554/onvif1?overrun_nonfatal=1&fifo_size=50000000",
-    "Camera2": "rtsp://udne:aa4tru@192.168.218.252:554/onvif2?overrun_nonfatal=1&fifo_size=50000000"
+    "Camera1": "rtsp://kafn:fa6nca@192.168.150.181:554/onvif1?overrun_nonfatal=1&fifo_size=50000000",
+    "Camera2": "rtsp://udne:aa4tru@192.168.150.253:554/onvif2?overrun_nonfatal=1&fifo_size=50000000"
 }
 
 stop_event = threading.Event()
@@ -77,7 +77,7 @@ def process_camera(url, camera_name):
                 print(f"Duas detecções consecutivas de humanos em {camera_name}. Enviando mensagem.")
 
                 fetch_and_send_messages(camera_name)
-                #login_screen()  
+                r.show() 
                 continue
 
             frame_time = time.time() - start_time
@@ -88,29 +88,7 @@ def process_camera(url, camera_name):
         cap.release()
         cv2.destroyAllWindows()
 
-# Interface gráfica para login
-def login_screen():
-    root = Tk()
-    root.title("Login")
 
-    Label(root, text="Username:").grid(row=0)
-    Label(root, text="Password:").grid(row=1)
-    username = Entry(root)
-    password = Entry(root, show="*")
-    username.grid(row=0, column=1)
-    password.grid(row=1, column=1)
-
-    Button(root, text="Login", command=lambda: check_login(username.get(), password.get(), root)).grid(row=2, column=1)
-
-    root.mainloop()
-
-def check_login(username, password, root):
-    cursor.execute("SELECT * FROM usuarios WHERE nome_usuario=%s AND senha_hash=%s", (username, password))
-    if cursor.fetchone():
-        print("Login successful. Continuing processing.")
-        root.destroy()
-    else:
-        print("Login failed. Try again.")
 
 # Função que inicia a thread para cada câmera
 

@@ -2,6 +2,9 @@ from twilio.rest import Client
 import SMS_Keys as keys
 import datetime
 
+
+#Teste para sender de Sms
+
 class Keys:
     def __init__(self,sid='',auth='',phone='',twi=''):
         self.account_sid = sid

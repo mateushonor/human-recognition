@@ -8,3 +8,11 @@ CREATE TABLE telefones (
     id SERIAL PRIMARY KEY,
     telefone VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE phones (
+    id SERIAL PRIMARY KEY,
+    telefone VARCHAR(255) NOT NULL,
+	twilio VARCHAR(255) NOT NULL,
+	sid VARCHAR(255) NOT NULL,
+	auth VARCHAR(255) NOT NULL
+);

@@ -13,8 +13,6 @@ class Keys:
         self.twilio_number = twi
 
 p1 = Keys('AC181d5aa4483d49b433293e0ecd022abf','70faadb9a1cb0ccf799daf05000eeb56','+5534999062849','+12512701223')
-p2 = Keys('AC0029589ef042a554df4ab8b701d4ddd8','0c39ad69c4e34d9145a1cbb3e327e818','+5534988315291','+12513019853')
-
 
 client = Client(p1.account_sid, p1.auth_token)
 
@@ -57,13 +55,23 @@ def fetch_and_send_messages(Camera_Name):
     )
     cursor = conn.cursor()
     cursor.execute("SELECT telefone FROM telefones LIMIT 1")
+
+    """
+    
+    Aqui o Sistema deveria pegar todos os números celulares cadastrados no banco de dados,
+    como estamos usando a versão trial do Twilio, apenas um número pode ser verificado, 
+    logo, não há necessidade para o uso de banco de dados nesta versão, apenas com a versão
+    paga do twilio faria sentido o seu uso, podendo enviar sms para vários telefones 
+    simultaneamente
     
     
-    phone_number = cursor.fetchone()
+    """
+    
+    
+    #phone_number = cursor.fetchone()
     # if phone_number:
         #send_sms(phone_number[0], "Ei tem humano aqui " + Camera_Name)
     send_sms_curl(p1, Camera_Name)
-    send_sms_curl(p2, Camera_Name)
 
     # conn.close()
 
